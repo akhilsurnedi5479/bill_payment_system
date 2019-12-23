@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-success text-center mt-5" *ngIf="formSubmitted1">
+                <div class="spinner-border" *ngIf="spinTheSpinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div *ngIf="displayStatus">
+                    <i class="material-icons">
+                        check_circle_outline
+                    </i> Payment Done Successfully
+                </div>
+            </div>
+           
+            <form [formGroup]="paymentForm" (ngSubmit)="onPaid()"  *ngIf="!formSubmitted1">
+                <div class="form-group text-center">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <img class="height-50" src="https://img.icons8.com/plasticine/100/000000/amazon.png">
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group">
+
+
+                    <div class="row">
+
+                        <div class="col-4 ">
+                            <label class="text-bold mb-1">Payment amount</label>
+                            <input id="cc-payment" name="cc-payment" type="text" readonly formControlName="amount"
+                                class="form-control text-center" [value]="'$'+amountToPay">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cc-name" class="text-bold mb-1">Name</label>
+                    <input id="cc-name" name="cc-name" type="text" class="form-control" formControlName="apname" readonly>
+                   
+                </div>
+                <div class="form-group">
+                    <label for="cc-email" class="text-bold control-label mb-1">Email Address</label>
+                    <input id="cc-email" type="text" class="form-control cc-number identified amazonpay"
+                        formControlName="apemail">
+                    <span class="validation-error"
+                        *ngIf="(paymentForm.get('apemail').hasError('required') && paymentForm.get('apemail').touched) || (!paymentForm.get('apemail').touched && paymentForm.get('apemail').touched)">Email
+                        Address
+                        required</span>
+                    <span class="validation-error"
+                        *ngIf="paymentForm.get('apemail').hasError('pattern') && paymentForm.get('apemail').touched">
+                        Enter Correct Email
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="text-bold control-label mb-1">Password</label>
+                    <input id="password" name="password" type="password" class="form-control"
+                        formControlName="appassword" required>
+                </div>
+                <div>
+                    <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" >
+                        <i class="fa fa-lock fa-lg"></i>&nbsp;
+                        <span id="payment-button-amount">Pay ${{amountToPay}}</span>
+                        <span id="payment-button-sending" style="display:none;">Sending…</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+
+    
+
+</div>

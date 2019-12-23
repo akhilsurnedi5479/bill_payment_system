@@ -1,0 +1,144 @@
+<div class="container-fluid">
+        <div class="row justify-content-center mt-4 opacity">
+            <div class="col-12 col-md-11 col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-success text-align-center" *ngIf="pendingRequest">
+                            Vendor Form Sent For Approval
+                        </div>
+                        <div class="alert alert-danger text-align-center" *ngIf="sentBackForApproval">
+                            Vendor Form Sent Back For Correction
+                        </div>
+                        <div class="alert alert-success text-align-center" *ngIf="adminAccepted">
+                            Vendor Officially Registered
+                        </div>
+                        <div class="page-title" *ngIf="!formSubmitted">Vendor Details</div>
+                        <form [formGroup]="editVendorForm" (submit)="onEdit()"
+                            *ngIf="!formSubmitted || vendorAlreadyExists">
+                            <div class="row">
+                                <div class="form-group mt-4 col-10 mr-5">
+                                    <label for="vendorname">Vendor Name</label>
+                                    <input type="text" class="form-control" id="vendorname" formControlName="vname" readonly
+                                        placeholder="Enter Vendor Name">
+                                </div>
+                                <div class="form-group mt-3 col-4">
+                                    <label for="companyregno">Company Registration No.</label>
+                                    <input type="text" class="form-control" id="companyregno"
+                                        formControlName="vcompanyregno" placeholder="Enter Company Registration No.">
+                                    <span class="validation-error"
+                                        *ngIf="editVendorForm.get('vcompanyregno').hasError('required') && editVendorForm.get('vcompanyregno').touched">Company
+                                        Registration No.
+                                        required</span>
+                                    <span class="validation-error"
+                                        *ngIf="editVendorForm.get('vcompanyregno').hasError('maxlength')">Company
+                                        Registration No. exceeded
+                                        max characters</span>
+                                </div>
+                                <div class="form-group mt-3 col-4">
+                                    <label for="vendorcountry">Vendor Country</label>
+                                    <input type="text" class="form-control" id="vendorcountry" formControlName="vcountry"
+                                        readonly>
+                                </div>
+                                <div class="form-group mt-3 col-4">
+                                    <label for="vendorstate">Vendor State</label>
+                                    <input type="text" class="form-control" id="vendorstate" formControlName="vstate"
+                                        readonly>
+                                </div>
+                                <div class="form-group mt-3 col-12">
+                                    <label for="address">Address</label>
+                                    <textarea rows="4" cols="50" class="form-control" formControlName="vaddress"
+                                        readonly></textarea>
+                                    <span class="validation-error"
+                                        *ngIf="(editVendorForm.get('vaddress').hasError('required') && editVendorForm.get('vaddress').touched) || (!editVendorForm.get('vaddress').touched && editVendorForm.get('vaddress').touched)">Address
+                                        required</span>
+                                </div>
+                                <div class="form-group mt-3 col-6">
+                                    <label for="email">Email Address</label>
+                                    <input type="text" class="form-control" id="email" formControlName="vemail"
+                                        placeholder="Enter Email Address">
+                                    <span class="validation-error"
+                                        *ngIf="(editVendorForm.get('vemail').hasError('required') && editVendorForm.get('vemail').touched) || (!editVendorForm.get('vemail').touched && editVendorForm.get('vemail').touched)">Email
+                                        Address
+                                        required</span>
+                                    <span class="validation-error"
+                                        *ngIf="editVendorForm.get('vemail').hasError('pattern') && editVendorForm.get('vemail').touched">
+                                        Enter Correct Email
+                                    </span>
+                                </div>
+                                <div class="form-group mt-3 col-6">
+                                    <label for="contactnumber">Contact Number</label>
+                                    <input type="text" class="form-control" id="contactnumber"
+                                        formControlName="vcontactnumber" placeholder="Enter Contact Number">
+                                    <span class="validation-error"
+                                        *ngIf="(editVendorForm.get('vcontactnumber').hasError('required') && editVendorForm.get('vcontactnumber').touched) || (!editVendorForm.get('vcontactnumber').touched && editVendorForm.get('vcontactnumber').touched)">
+                                        Contact Number required</span>
+                                    <span class="validation-error"
+                                        *ngIf="editVendorForm.get('vcontactnumber').hasError('pattern')">Enter Numeric
+                                        Values only</span>
+                                    <span class="validation-error"
+                                        *ngIf="editVendorForm.get('vcontactnumber').hasError('maxlength')">Contact Number
+                                        exceeded max characters</span>
+                                </div>
+                                <div class="form-group mt-3 col-6">
+                                    <label for="website">Web Site</label>
+                                    <input type="text" class="form-control" id="website" formControlName="vwebsite"
+                                        placeholder="Enter Web Site">
+                                    <span class="validation-error"
+                                        *ngIf="(editVendorForm.get('vwebsite').hasError('required') && editVendorForm.get('vwebsite').touched) || (!editVendorForm.get('vwebsite').touched && editVendorForm.get('vwebsite').touched)">Web
+                                        Site
+                                        required</span>
+                                    <span class="validation-error"
+                                        *ngIf="editVendorForm.get('vwebsite').hasError('pattern') && editVendorForm.get('vwebsite').touched"
+                                        (input)="onDisplay()">
+                                        Enter Correct WebSite
+                                    </span>
+                                </div>
+                                <div class="form-group mt-3 col-6">
+                                    <label for="certificateissuedate">Certificate Issue Date</label>
+                                    <input type="date" date-format="mm/dd/yyyy" class="form-control" id="datepicker"
+                                        formControlName="vcertificateissuedate">
+                                    <span class="validation-error"
+                                        *ngIf="(editVendorForm.get('vcertificateissuedate').hasError('required') && editVendorForm.get('vcertificateissuedate').touched) || (!editVendorForm.get('vcertificateissuedate').touched && editVendorForm.get('vcertificateissuedate').touched)">Certificate
+                                        Issue Date
+                                        required</span>
+                                </div>
+                                <div class="form-group mt-3 col-6">
+                                    <label for="certificatevaliditydate">Certificate Validity Date</label>
+                                    <input type="date" date-format="mm/dd/yyyy" class="form-control" id="datepicker"
+                                        formControlName="vcertificatevaliditydate">
+                                    <span class="validation-error"
+                                        *ngIf="(editVendorForm.get('vcertificatevaliditydate').hasError('required') && editVendorForm.get('vcertificatevaliditydate').touched) || (!editVendorForm.get('vcertificatevaliditydate').touched && editVendorForm.get('vcertificatevaliditydate').touched)">Certificate
+                                        Validity Date
+                                        required</span>
+                                </div>
+                                <div class="form-group mt-3 col-6">
+                                    <label for="yearofestablishment">Year Of Establishment</label>
+                                    <input type="number" min="1900" max="2099" step="1" value="2016" class="form-control"
+                                        id="yearofestablishment" formControlName="vyearofestablishment" />
+                                    <span class="validation-error"
+                                        *ngIf="(editVendorForm.get('vyearofestablishment').hasError('required') && editVendorForm.get('vyearofestablishment').touched) || (!editVendorForm.get('vyearofestablishment').touched && editVendorForm.get('vyearofestablishment').touched)">
+                                        Year Of Establishment required</span>
+                                </div>
+                                <div class="custom-group mt-3 col-12" formArrayName="pGateway">
+                                    <label for="paymentgateway">Payment Gateways</label>
+                                    <div class="custom-control custom-checkbox"
+                                        *ngFor="let py of pGateway.controls; index as i">
+                                        <input type="checkbox" class="custom-control-input" [value]="paymentgateway[i]"
+                                            [id]="i" formControlName="{{i}}"
+                                            (change)="getSelectedPaymentGateway(paymentgateway[i])">
+                                        <label class="custom-control-label" [for]="i">{{paymentgateway[i]}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-4 text-center mt-3">
+                                <input type="submit" class="btn bg-blue text-white form-control"
+                                    [disabled]="editVendorForm.invalid" name="edit" value="Edit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//geodata.solutions/includes/countrystatecity.js"></script>

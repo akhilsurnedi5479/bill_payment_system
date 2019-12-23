@@ -1,0 +1,126 @@
+/* You can add global styles to this file, and also import other style files */
+.material-icons{
+    vertical-align: middle;
+}
+.validation-error{
+    color: red;
+}
+.opacity{
+  opacity: 0.9;
+  filter: alpha(opacity=0);
+}
+.validation-success{
+    color: green;
+}
+
+
+.bg-blue{
+    background-color: #2c3e50;
+    
+}
+
+.bank-bg{
+   /*  background-image: url('https://images.unsplash.com/photo-1534951009808-766178b47a4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80');
+ */ 
+    background-image: linear-gradient(#2980b9,#2c3e50);   
+     /* background-image: linear-gradient(#A1FFCE,#FAFFD1,#12D8FA);   */
+    background-repeat: no-repeat;
+   /*  background-size: 55cm 30cm;*/
+    background-attachment: fixed; 
+}
+.page-title{
+    font-size: 30px;
+    text-align: center;
+}
+
+.btn{
+    background-color:#496480
+}
+
+.text-size-30{
+    font-size: 25px;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+
+.tab-background{
+    background-color: red;
+
+}
+
+.user-dashboard-title{
+    font-size: 20px;
+    text-align: center;
+}
+.vendor-type-icons:hover{
+    background-color: rgb(255, 255, 255);
+    
+    box-shadow: 10px 10px 50px  rgb(167, 167, 167);
+}
+
+.scrollable-y{
+    overflow-y:auto;
+    max-height: 150px;
+}
+.scrollable-x{
+    overflow-x:auto;
+    max-width: 800px;
+}
+
+.bg-blue{
+    color:rgb(255, 255, 255);
+    background-color: #496480;
+}
+
+.width-200{
+    width: 200px;
+}
+
+.width-750{
+    width: inherit
+}
+.font-size-30{
+    font-size: 30px;
+}
+.vendor-type-card{
+    width: 200px;
+    height: 200px;
+}
+
+.opacity-20{
+    opacity: 0.1;
+    filter: alpha(opacity=0);
+}
+.special-card {
+    background-color: rgba(245, 245, 245, 1);
+     opacity: .4;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+html {
+    overflow-y:scroll;
+}
+
+.color-dark-blue{
+    background-color: #2c3e50
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #366699;
+    color: white;
+    text-align: center;
+  }
+
+/* .card-bg {
+    background-image: linear-gradient(#A1FFCE,#FAFFD1,#12D8FA);  
+ } */

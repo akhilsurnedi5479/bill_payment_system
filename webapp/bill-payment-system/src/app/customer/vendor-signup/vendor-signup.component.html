@@ -1,0 +1,199 @@
+<div class="card-body">
+  <div class="page-title">Vendor Registration</div>
+  <div class="alert alert-danger" *ngIf="vendorAlreadyExists && !signupForm.get('vname').hasError('required')">
+    Vendor Already Exist!!
+  </div>
+  <div class="alert alert-success" *ngIf="formSubmitted && !vendorAlreadyExists">
+    Successfull Registered!!
+  </div>
+  <div *ngIf="formSubmitted && !vendorAlreadyExists">
+    <a routerLink="/login" class="btn btn-primary">Login</a>
+  </div>
+  <form [formGroup]="signupForm" (submit)="onSignUp()" *ngIf="!formSubmitted || vendorAlreadyExists">
+    <div class="row">
+      <div class="form-group mt-4 col-12 mr-1">
+        <label for="vendorname">Vendor Name</label>
+        <input type="text" class="form-control" id="vendorname" formControlName="vname" (keydown.space)="$event.preventDefault();"
+          (input)="vendorExist(vendorname)" placeholder="Enter Vendor Name">
+        <span class="validation-success"
+          *ngIf="!vendorAlreadyExists && !signupForm.get('vname').hasError('required')">Vendor Name
+          Available</span>
+        <span class="validation-error"
+          *ngIf="signupForm.get('vname').hasError('required') && signupForm.get('vname').touched">Vendor Name
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('vname').hasError('maxlength')">Vendor Name exceeded
+          max
+          characters</span>
+        <span class="validation-error" *ngIf="signupForm.get('vname').hasError('vendorExist')">Vendor Name already
+          exists</span>
+      </div>
+      <div class="form-group mt-2 col-12 col-lg-6">
+        <label for="companyregno">Company Registration No.</label>
+        <input type="text" class="form-control" id="companyregno" formControlName="vcompanyregno" (keydown.space)="$event.preventDefault();"
+          placeholder="Enter Company Registration No." (keydown.space)="$event.preventDefault();" >
+        <span class="validation-error"
+          *ngIf="signupForm.get('vcompanyregno').hasError('required') && signupForm.get('vcompanyregno').touched">Company
+          Registration No.
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('vcompanyregno').hasError('maxlength')">Company
+          Registration No. exceeded
+          max characters</span>
+      </div>
+      <div class="form-group mt-2 col-12 col-lg-6">
+        <label for="vendortype">Vendor Type</label>
+        <select class="form-control" id="vendortype" formControlName="vvendortype" placeholder="asdf">
+          <option class="form-control" value="" selected>Select Vendor Type</option>
+          <option class="form-control" *ngFor="let vt of vtype" [id]="vt" [value]="vt.vendorType">{{vt.vendorType}}
+          </option>
+        </select>
+        <span class="validation-error"
+          *ngIf="signupForm.get('vvendortype').hasError('required') && signupForm.get('vvendortype').touched">Vendor
+          Type
+          required</span>
+      </div>
+      <div class="form-group mt-3 col-12 col-lg-6">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="pswd" placeholder="Enter Password" (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('pswd').hasError('required') && signupForm.get('pswd').touched) || (!signupForm.get('pswd').touched && signupForm.get('cpswd').touched)">Password
+          required</span>
+      </div>
+      <div class="form-group mt-3 col-12 col-lg-6">
+        <label for="cpassword">Confirm Password</label>
+        <input type="password" class="form-control" id="cpassword" formControlName="cpswd"
+          placeholder="Confirm Password">
+        <span class="validation-error"
+          *ngIf="signupForm.get('cpswd').hasError('required') && signupForm.get('cpswd').touched && signupForm.get('pswd').touched">Confirm
+          Password
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('cpswd').hasError('nomatch')">Confirm Password
+          not matched with password</span>
+      </div>
+
+      <div class="form-group mt-3 col-12 col-lg-6">
+        <label for="countryId">Country</label>
+        <select name="country" class="countries form-control" id="countryId" formControlName="vcountry"
+          (change)="getStates()">
+          <option value="">Select Country</option>
+          <!--(change)="getStates($event.target.value)" -->
+
+          <option *ngFor="let country of countries" [ngValue]="country">{{country.country}}</option>
+        </select>
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vcountry').hasError('required') && signupForm.get('vcountry').touched) || (!signupForm.get('vcountry').touched && signupForm.get('vcountry').touched)">Country
+          required</span>
+      </div>
+      <div class="form-group mt-3 col-12 col-lg-6">
+        <label for="stateId">State</label>
+        <select name="state" class="states form-control" id="stateId" formControlName="vstate">
+          <option value="">Select State</option>
+          <option *ngFor="let state of states" [ngValue]="state">{{state}}</option>
+        </select>
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vstate').hasError('required') && signupForm.get('vstate').touched) || (!signupForm.get('vstate').touched && signupForm.get('vstate').touched)">State
+          required</span>
+      </div>
+      <div class="form-group mt-3 col-12">
+        <label for="address">Address</label>
+        <textarea rows="4" cols="50" class="form-control" formControlName="vaddress"
+          placeholder="Enter Address"></textarea>
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vaddress').hasError('required') && signupForm.get('vaddress').touched) || (!signupForm.get('vaddress').touched && signupForm.get('vaddress').touched)">Address
+          required</span>
+      </div>
+      <div class="form-group mt-3 col-12 ">
+        <label for="email">Email Address</label>
+        <input type="text" class="form-control" id="email" formControlName="vemail" placeholder="Enter Email Address" (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vemail').hasError('required') && signupForm.get('vemail').touched) || (!signupForm.get('vemail').touched && signupForm.get('vemail').touched)">Email
+          Address
+          required</span>
+        <span class="validation-error"
+          *ngIf="signupForm.get('vemail').hasError('pattern') && signupForm.get('vemail').touched">
+          Enter Correct Email
+        </span>
+      </div>
+      <div class="form-group mt-3 col-12">
+        <label for="website">Web Site</label>
+        <input type="text" class="form-control" id="website" formControlName="vwebsite" placeholder="Enter Web Site" (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vwebsite').hasError('required') && signupForm.get('vwebsite').touched) || (!signupForm.get('vwebsite').touched && signupForm.get('vwebsite').touched)">Web
+          Site
+          required</span>
+        <span class="validation-error"
+          *ngIf="signupForm.get('vwebsite').hasError('pattern') && signupForm.get('vwebsite').touched">
+          Enter Correct WebSite
+        </span>
+      </div>
+
+      <div class="form-group mt-3 col-12 col-md-6">
+        <label for="contactnumber">Contact Number</label>
+        <input type="text" class="form-control" id="contactnumber" formControlName="vcontactnumber" min="1000000000" (keydown.space)="$event.preventDefault();"
+          placeholder="Enter Contact Number">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vcontactnumber').hasError('required') && signupForm.get('vcontactnumber').touched) || (!signupForm.get('vcontactnumber').touched && signupForm.get('vcontactnumber').touched)">
+          Contact Number required</span>
+        <span class="validation-error" *ngIf="signupForm.get('vcontactnumber').hasError('pattern')">Enter Numeric
+          Values only</span>
+        <span class="validation-error" *ngIf="signupForm.get('vcontactnumber').hasError('maxlength')">Contact
+          Number
+          exceeded max characters</span>
+          <span class="validation-error"
+          *ngIf="(signupForm.get('vcontactnumber').hasError('minlength') && signupForm.get('vcontactnumber').touched) ">
+           Enter valid Contact number</span>
+          
+
+      </div>
+      <div class="form-group mt-3 col-12 col-md-6">
+        <label for="yearofestablishment">Year Of Establishment</label>
+        <input type="text" min="1800" max="2099" step="1" value="2016" class="form-control" id="yearofestablishment" 
+          formControlName="vyearofestablishment" (keydown.space)="$event.preventDefault();" />
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vyearofestablishment').hasError('required') && signupForm.get('vyearofestablishment').touched) || (!signupForm.get('vyearofestablishment').touched && signupForm.get('vyearofestablishment').touched)">
+          Year Of Establishment required</span>
+        <span class="validation-error" *ngIf="signupForm.get('vyearofestablishment').hasError('maxlength')">Enter a
+          valid year</span>
+        <span class="validation-error" *ngIf="signupForm.get('vyearofestablishment').hasError('pattern')">Enter Numeric
+          Values only</span>
+      </div>
+
+
+      <div class="form-group mt-3 col-12 col-md-6">
+        <label for="certificateissuedate">Certificate Issue Date</label>
+        <input type="date" date-format="yyyy-MM-dd" class="form-control" id="certificateissuedate" [max]="todayDate"
+          (change)="setMinimumDate(date)" formControlName="vcertificateissuedate">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vcertificateissuedate').hasError('required') && signupForm.get('vcertificateissuedate').touched) || (!signupForm.get('vcertificateissuedate').touched && signupForm.get('vcertificateissuedate').touched)">Certificate
+          Issue Date
+          required</span>
+      </div>
+      <div class="form-group mt-3 col-12 col-md-6">
+        <label for="certificatevaliditydate">Certificate Validity Date</label>
+        <input type="date" date-format="mm/dd/yyyy" class="form-control" id="certificatevaliditydate" [min]="startDate"
+          formControlName="vcertificatevaliditydate">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('vcertificatevaliditydate').hasError('required') && signupForm.get('vcertificatevaliditydate').touched) || (!signupForm.get('vcertificatevaliditydate').touched && signupForm.get('vcertificatevaliditydate').touched)">Certificate
+          Validity Date
+          required</span>
+      </div>
+
+      <div class="custom-group mt-3 col-12">
+        <label for="paymentgateway">Payment Gateways</label>
+        <div class="custom-control custom-checkbox" *ngFor="let py of paymentgateway" let i=index>
+          <input type="checkbox" class="custom-control-input" [value]="py" [id]="py" formControlName="vpaymentgateway"
+            (change)="getSelectedPaymentGateway(py)">
+          <label class="custom-control-label" [for]="py">{{py}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-12 text-center mt-3">
+      <input type="submit" class="btn bg-blue text-white form-control" [disabled]="signupForm.invalid" name="signup"
+        value="Sign Up">
+    </div>
+    <div class="form-group col-12 text-center mt-3">
+      <input type="button" class="btn bg-blue text-white form-control"  name="Reset" (click)="resetForm()"
+        value="Reset">
+    </div>
+
+  </form>
+</div>

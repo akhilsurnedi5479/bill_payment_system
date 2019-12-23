@@ -1,0 +1,144 @@
+<div class="container">
+    <div class="row width-500">
+        <div class="col">
+            
+                
+                <div *ngIf="type.length==0" class="alert alert-danger text-bold text-align-center">No
+                    Registered Vendors</div>
+
+
+
+
+
+                <div>
+                    <table class="table" *ngIf="type.length!=0">
+                        <thead class="text-center">
+                            <th scope="col">Vendor Name</th>
+                            <th scope="col">Add Bill</th>
+                            <th scope="col">Pay Bill</th>
+
+                        </thead>
+                        <tbody *ngFor="let vendorAvailable of type">
+                            <tr class="text-center">
+
+                                <td>{{vendorAvailable.vendorName}}</td>
+                                <td>
+                                    <div class="btn bg-blue" data-toggle="modal"
+                                        (click)="onVendorSelected(vendorAvailable.vendorName)"
+                                        data-target="#exampleModalCenter2">
+                                        Add Bill</div>
+                                </td>
+                                <td>
+                                    <div class="btn bg-blue" (click)="goToPendingBills(vendorAvailable.vendorName)">
+
+                                        Pay Bill</div>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+
+                </div>
+
+
+
+
+                
+        </div>
+    </div>
+
+
+</div>
+<!-- 
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Pay Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="paymentTypeSelected=='Amazon Pay'">
+
+                    <app-payment-gateway></app-payment-gateway>
+                </div>
+
+                <app-payment-gateway-paytm *ngIf="paymentTypeSelected==='PayTm'"></app-payment-gateway-paytm>
+                <app-payment-gateway-gpay *ngIf="paymentTypeSelected==='GooglePay'"></app-payment-gateway-gpay>
+                <app-payment-gateway-debit *ngIf="paymentTypeSelected==='Debit Card'"></app-payment-gateway-debit>
+                <app-payment-gateway-phonepe *ngIf="paymentTypeSelected==='PhonePe'"></app-payment-gateway-phonepe>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div> -->
+
+<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Pay Invoice</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCloseModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="alert alert-success text-align-center" *ngIf="billAdded">
+                        New Bill Added
+                    </div>
+
+
+                    <form [formGroup]="addBillForm" (ngSubmit)="onAddBill()" *ngIf="!billAdded">
+                        <div class="form-group">
+                            <label for="userName" class="text-bold mb-1">Name</label>
+                            <input id="userName" name="userName" type="text" class="form-control"
+                                formControlName="userName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="vendorName" class="text-bold mb-1">Vendor</label>
+                            <input id="vendorName" name="vendorName" type="text" class="form-control"
+                                formControlName="vendorName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="vendorType" class="text-bold mb-1">Vendor Type</label>
+                            <input id="vendorType" name="vendorType" type="text" class="form-control"
+                                formControlName="vendorType" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="bill-amount" class="text-bold mb-1">Amount</label>
+                            <input id="bill-amount" name="bill-amount" type="number" min="10" class="form-control"
+                                formControlName="billAmount">
+                                <span class="validation-error" *ngIf="(addBillForm.get('billAmount').hasError('required') && addBillForm.get('billAmount').touched) 
+                                                || (!addBillForm.get('billAmount').touched && addBillForm.get('billAmount').touched)">
+                                    Enter the bill amount
+                                </span>
+                                <span class="validation-error" *ngIf=" addBillForm.get('billAmount').hasError('min') ">
+                                    Enter the bill amount
+                                </span>
+                        </div>
+
+                        <div>
+                            <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" [disabled]="addBillForm.invalid">
+                                Add Bill
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

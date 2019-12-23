@@ -1,0 +1,43 @@
+<div class="container justify-content-center">
+    <div class="row">
+        <div class="d-flex col-12 justify-content-center">
+            <div class="card mt-3 tab-card">
+                <div class="card-header tab-card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" *ngFor="let vendorType of vendorTypeList">
+                            <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="One"
+                                aria-selected="true"  (click)="getVendors(vendorType.vendorType)" >
+                                
+                                <div class="user-dashboard-title">{{vendorType.vendorType}}</div>
+                            </a>
+    
+                        </li>
+    
+                    </ul>
+                </div>
+    
+                <div class="tab-content " id="myTabContent" >
+                    <div class="tab-pane fade in show active p-3  " id="one" role="tabpanel" aria-labelledby="one-tab">
+    
+                        <app-vendor-list [type]="vendorsAvailable" [vendorTypeSelected]="vendorTypeSelected" [vendorNotAvailable]="vendorNotAvailable"
+                            *ngIf="showVendorList">
+                        </app-vendor-list>
+                    </div>
+                    
+                </div>
+                <div class="tab-content" id="myTabContent" *ngIf="!typeSelected">
+                   <div class="alert alert-info ml-3 mr-3 text-align-center">Select the vendor Type</div>
+                </div>
+            </div>
+        </div>
+        
+       
+    </div>
+</div>
+
+<!-- <div class="container  w-50">
+    <app-vendor-list [type]="vendorsAvailable" [vendorNotAvailable]="vendorNotAvailable" *ngIf="showVendorList">
+    </app-vendor-list>
+
+
+</div> -->

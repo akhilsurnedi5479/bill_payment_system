@@ -1,0 +1,256 @@
+<div class="container mt-3 opacity">
+
+    <div class="alert alert-success" *ngIf="acceptedVendor">
+        Vendor Accepted
+    </div>
+    <div class="alert alert-danger" *ngIf="deletedVendor">
+        Vendor Declined
+    </div>
+    <div class="alert alert-success" *ngIf="sentBackForCorrection">
+        Vendor Sent Back For Correction Successfully
+    </div>
+    <div class="card">
+        <div class="card-header text-size-30 text-align-center">Pending Vendors</div>
+        <div *ngIf="vendorListEmpty()" class="alert alert-danger text-bold text-align-center mt-2">
+            No Pending Vendors
+        </div>
+        <div class="card-body col-lg-12">
+            <ul class="list-group list-group-flush" *ngFor="let vendor of vendorList">
+                <li class="list-group-item ">
+                    <div class="row collapsed hover">
+                        <div class="col-12 col-md-8 " data-toggle="collapse" [attr.data-target]="'#'+vendor.vendorName">
+                            <b>Vendor Name : </b>{{vendor.vendorName}}
+                        </div>
+                        <div class="d-flex col-12 col-md-4 justify-content-end">
+                            <div class="btn btn-primary" (click)="onApproving(vendor.vendorName)"><i
+                                    class="material-icons validation-success">
+                                    check_circle
+                                </i></div> 
+                            <div class="btn btn-danger ml-2 mr-2"  (click)="onDeclining(vendor.vendorName)"><i
+                                    class="material-icons validation-error">
+                                    cancel
+                                </i></div>
+
+
+                            <div class="btn btn-danger ml-2 mr-2"
+                                  (click)="onSendBackForCorrection(vendor.vendorName)"><i
+                                    class="material-icons ">
+                                    cached
+                                </i></div>   
+                        </div>
+
+
+                    </div>
+
+                    <div [id]="vendor.vendorName" class="fade collapse mt-3 bg-grey">
+                        <div style=" height: 5px; background-color: wheat;"></div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    Registration Number:
+                                </b>{{vendor.vendorRegNo}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Email: </b>{{vendor.vendorEmail}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Contact Numer: </b>{{vendor.vendorContactNo}}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    WebSite:
+                                </b>{{vendor.vendorWebSite}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Country: </b>{{vendor.vendorCountry}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>State: </b>{{vendor.vendorState}}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    Certification Issue Date
+                                </b>{{vendor.vendorCertificationIssueDate}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Certification Validity Date: </b>{{vendor.vendorCertificationValidityDate}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Year Of Establishment: </b>{{vendor.vendorYearOfEstablishment}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>   
+    </div>
+
+
+
+    <div class="card mt-3">
+        <div class="card-header text-align-center text-size-30">Sent For Correction Vendors</div>
+        <div *ngIf="vendorListsentforCorrection()" class="alert alert-danger text-bold text-align-center">No
+            Pending Vendors</div>
+        <div class="card-body col-lg-12">
+            <ul class="list-group list-group-flush"  *ngFor="let vendorCorrection of vendorListsentforcorrection">
+                <li class="list-group-item ">
+                    <div class="row collapsed hover">
+                        <div class="col-12 col-md-10" data-toggle="collapse"
+                            [attr.data-target]="'#'+vendorCorrection.vendorName">
+                            <b>Vendor Name : </b>{{vendorCorrection.vendorName}}
+                        </div>
+                        <div class="d-flex col-12 col-md-2 justify-content-end">
+                            <div class="btn btn-primary" (click)="onApproving(vendorCorrection.vendorName)"><i
+                                    class="material-icons validation-success">
+                                    check_circle
+                                </i></div> 
+                            <div class="btn btn-danger ml-2
+                                mr-2"  (click)="onDeclining(vendorCorrection.vendorName)"><i
+                                    class="material-icons validation-error">
+                                    cancel
+                                </i></div>
+                             
+                        </div>
+                    </div>
+                    <div [id]="vendorCorrection.vendorName" class="fade collapse mt-3 md-3">
+                        <div style=" height: 5px; background-color: wheat;"></div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    Registration Number:
+                                </b>{{vendorCorrection.vendorRegNo}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Email: </b>{{vendorCorrection.vendorEmail}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Contact Numer: </b>{{vendorCorrection.vendorContactNo}}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    WebSite:
+                                </b>{{vendorCorrection.vendorWebSite}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Country: </b>{{vendorCorrection.vendorCountry}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>State: </b>{{vendorCorrection.vendorState}}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    Certification Issue Date
+                                </b>{{vendorCorrection.vendorCertificationIssueDate}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Certification Validity Date: </b>{{vendorCorrection.vendorCertificationValidityDate}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Year Of Establishment: </b>{{vendorCorrection.vendorYearOfEstablishment}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>   
+            
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-header text-align-center text-size-30">Vendors</div>
+        <div *ngIf="vendorListAvailable()" class="alert alert-danger text-bold text-align-center">No
+            Registered Vendors</div>
+        <div class="card-body col-lg-12">
+            <ul class="list-group list-group-flush"  *ngFor="let vendorAvailable of vendorsAvailable">
+                <li class="list-group-item ">
+                    <div class="row collapsed hover" data-toggle="collapse"
+                        [attr.data-target]="'#'+vendorAvailable.vendorName">
+                        <div class="col-12 col-md-6">
+                            <b>Vendor Name : </b>{{vendorAvailable.vendorName}}
+                        </div>
+                        <div class="col-12 col-md-6" data-toggle="collapse">
+                            <b>Vendor Type : </b>{{vendorAvailable.vendorType.vendorTypeName}}
+                        </div>
+
+                    </div>
+                    <div [id]="vendorAvailable.vendorName" class="fade collapse mt-3 ">
+                        <div style=" height: 5px; background-color: wheat;"></div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    Registration Number:
+                                </b>{{vendorAvailable.vendorRegNo}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Email: </b>{{vendorAvailable.vendorEmail}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Contact Numer: </b>{{vendorAvailable.vendorContactNo}}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    WebSite:
+                                </b>{{vendorAvailable.vendorWebSite}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Country: </b>{{vendorAvailable.vendorCountry}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>State: </b>{{vendorAvailable.vendorState}}
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12 col-md-4">
+                                <b>
+                                    Certification Issue Date
+                                </b>{{vendorAvailable.vendorCertificationIssueDate}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Certification Validity Date: </b>{{vendorAvailable.vendorCertificationValidityDate}}
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <b>Year Of Establishment: </b>{{vendorAvailable.vendorYearOfEstablishment}}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>   
+            
+    </div>
+
+
+
+
+</div>

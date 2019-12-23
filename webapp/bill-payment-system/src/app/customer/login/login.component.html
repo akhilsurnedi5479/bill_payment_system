@@ -1,0 +1,36 @@
+<div class="row justify-content-center mt-4 opacity">
+  <div class="col-12 col-md-4 col-lg-3">
+    <div class="card card-bg ">
+      <div class="card-body">
+        <div class="page-title">Login</div>
+        <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+          <div class="alert alert-info" role="alert" *ngIf="authSource==='cart'">
+            Please Login before you proceed
+          </div>
+          <div class="alert alert-info" *ngIf="!isLoginValid">
+            Invalid Username/Password
+          </div>
+          <div class="form-group mt-4">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" ngModel #uname="ngModel" id="username" name="uname"
+              placeholder="Enter Username" required>
+            <span class="validation-error" *ngIf="uname.invalid && uname.touched">Username required</span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" ngModel #pass="ngModel" id="password" name="pass"
+              placeholder="Enter Password" required>
+            <span class="validation-error" *ngIf="pass.invalid && pass.touched">Password required</span>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <input type="submit" class="btn  text-white" [disabled]="loginForm.invalid" name="login"
+                value="Login">
+            </div>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

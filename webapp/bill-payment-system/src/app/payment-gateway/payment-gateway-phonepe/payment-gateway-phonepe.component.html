@@ -1,0 +1,90 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            
+            <div class="alert alert-success text-center mt-5" *ngIf="formSubmitted">
+                <div class="spinner-border" *ngIf="spinTheSpinner">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div *ngIf="displayStatus">
+                    <i class="material-icons">
+                        check_circle_outline
+                    </i> Payment Done Successfully
+                </div>
+            </div>
+            <form [formGroup]="paymentForm" (submit)="onPaid()" *ngIf="!formSubmitted">
+                <div class="form-group text-center">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <img class="height-50"
+                                src="http://www.english.sitichannels.com/wp-content/uploads/2018/09/Phonepay.jpg">
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group">
+
+
+                    <div class="row">
+                 <!--        <div class="col-8 ">
+                            <div>
+                                Select Months:
+                            </div>
+                            <div>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-append">
+                                        <button type="button" class="btn btn-primary " (click)="decreaseMonths()"
+                                            [disabled]="disableOnMinMonths">-</button>
+                                    </span>
+                                    <input type="text" class="width-35  text-center form-control" readonly
+                                        [value]="monthsSelected">
+                                    <span class="input-group-prepend">
+                                        <button type="button" class="btn btn-primary " (click)="increaseMonths()"
+                                            [disabled]="disableOnMaxMonths">+</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="col-4 ">
+                            <label class="text-bold mb-1">Payment amount</label>
+                            <input id="cc-payment" name="cc-payment" type="text" readonly formControlName="amount"
+                                class="form-control text-center" [value]="'$'+amountToPay">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cc-name" class="text-bold mb-1">Name</label>
+                    <input id="cc-name" name="cc-name" type="text" class="form-control" formControlName="gpayName" readonly>
+                   
+                </div>
+                <div class="form-group">
+                    <label for="cc-email" class="text-bold control-label mb-1">Mobile Number</label>
+                    <input id="cc-email" type="text" class="form-control identified"
+                        formControlName="gpayNumber">
+                    <span class="validation-error"
+                        *ngIf="(paymentForm.get('gpayNumber').hasError('required') && paymentForm.get('gpayNumber').touched) || (!paymentForm.get('gpayNumber').touched && paymentForm.get('gpayNumber').touched)">
+                        Contact Number required</span>
+                    <span class="validation-error" *ngIf="paymentForm.get('gpayNumber').hasError('pattern')">Enter Numeric
+                        Values only</span>
+                    <span class="validation-error" *ngIf="paymentForm.get('gpayNumber').hasError('maxlength')">Contact
+                        Number
+                        exceeded max characters</span>
+
+                </div>
+                <div class="form-group">
+                    <label for="password" class="text-bold control-label mb-1">Password</label>
+                    <input id="password" name="password" type="password" class="form-control"
+                        formControlName="gpayPassword">
+                </div>
+                <div>
+                    <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block" [disabled]="paymentForm.isvalid">
+                        <i class="fa fa-lock fa-lg"></i>&nbsp;
+                        <span id="payment-button-amount">Pay ${{amountToPay}}</span>
+                        <span id="payment-button-sending" style="display:none;">Sending…</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg navbar-dark color-dark-blue opacity">
+
+    <a routerLink="/" class="navbar-brand" *ngIf="!isAuthenticated()"><i class="material-icons">
+            assignment
+        </i> Bill Payment System</a>
+    <a routerLink="/vendors" class="navbar-brand" *ngIf="isAuthenticated() && !isAdmin() &&!isVendor()"><i
+            class="material-icons">
+            assignment
+        </i> Bill Payment System</a>
+
+    <a routerLink="/vendor-edit" class="navbar-brand" *ngIf="isAuthenticated() && isVendor()"><i
+            class="material-icons">
+            assignment
+        </i> Bill Payment System</a>
+    <a routerLink="/vendor-approval" class="navbar-brand" *ngIf="isAdmin()"><i class="material-icons">
+            assignment
+        </i> Bill Payment System</a>
+
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navcontent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navcontent">
+        <ul class="navbar-nav ml-auto">
+            <!-- <li class="nav-item">
+                <a routerLink="/" *ngIf="isAdmin()" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/vendors" *ngIf="isAuthenticated() && !isAdmin() &&!isVendor()"
+                    class="nav-link">Home2</a>
+            </li> -->
+            <li class="nav-item">
+                <a routerLink="/bill-history" *ngIf="isAuthenticated() && !isAdmin() &&!isVendor()"
+                    class="nav-link">History</a>
+            </li>
+
+            <li class="nav-item" *ngIf="!isAuthenticated()">
+                <a routerLink="/login" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="!isAuthenticated()">
+                <a routerLink="/signup" class="nav-link">Register</a>
+            </li>
+            <!--  <li class="nav-item" *ngIf="!isAuthenticated()">
+              <a routerLink="/vendorsignup" class="nav-link">Vendor Register</a>
+          </li> -->
+            <li class="nav-item" *ngIf="isAuthenticated()"><a routerLink="/" class="nav-link"><i class="material-icons">
+                        person
+                    </i>{{getUser().firstName}}</a></li>
+            <li class="nav-item" *ngIf="isAuthenticated()"><a routerLink="/" class="nav-link"
+                    (click)="onSignOut()">Logout</a></li>
+            <li class="nav-item" *ngIf="!isAuthenticated()">
+                <a routerLink="/faq" class="nav-link">FAQ</a>
+            </li>
+            <li class="nav-item" *ngIf="isAuthenticated()"><a routerLink="/report" class="nav-link">Report</a></li>
+
+
+<!--             <li class="nav-item" *ngIf="isAuthenticated() && isAdmin()"><a routerLink="/" class="nav-link">Report</a></li>
+ -->        </ul>
+    </div>
+</nav>

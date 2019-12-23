@@ -1,0 +1,139 @@
+<div class="card-body">
+  <div class="page-title">Sign Up
+
+
+  </div>
+
+
+  <div class="alert alert-danger" *ngIf="userAlreadyExists && !signupForm.get('uname').hasError('required')">
+    User Already Exist!!
+  </div>
+  <div class="alert alert-success" *ngIf="formSubmitted && !userAlreadyExists">
+    Successfull Signed Up!!
+  </div>
+  <div *ngIf="formSubmitted && !userAlreadyExists">
+    <a routerLink="/login" class="btn btn-primary">Login</a>
+  </div>
+  <form [formGroup]="signupForm" (submit)="onSignUp()" *ngIf="!formSubmitted || userAlreadyExists">
+    <div class="row">
+      <div class="form-group mt-4 col-12 mr-1">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" formControlName="uname" (input)="userExist(username)"
+          placeholder="Enter Username" (keydown.space)="$event.preventDefault();">
+        <span class="validation-success"
+          *ngIf="!userAlreadyExists && !signupForm.get('uname').hasError('required')">Username Available</span>
+        <span class="validation-error"
+          *ngIf="signupForm.get('uname').hasError('required') && signupForm.get('uname').touched">Username
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('uname').hasError('maxlength')">Username exceeded max
+          characters</span>
+      </div>
+      <div class="form-group mt-2 col-6">
+        <label for="firstname">FirstName</label>
+        <input type="text" class="form-control" id="firstname" formControlName="fname" placeholder="Enter FirstName"
+          (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="signupForm.get('fname').hasError('required') && signupForm.get('fname').touched">Firstname
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('fname').hasError('pattern')">Enter Characters
+          only</span>
+        <span class="validation-error" *ngIf="signupForm.get('fname').hasError('maxlength')">Firstname exceeded
+          max
+          characters</span>
+      </div>
+      <div class="form-group mt-2 col-6">
+        <label for="lastname">LastName</label>
+        <input type="text" class="form-control" id="lastname" formControlName="lname" placeholder="Enter LastName"
+          (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="signupForm.get('lname').hasError('required') && signupForm.get('lname').touched">Lastname
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('lname').hasError('pattern')">Enter Characters
+          only</span>
+        <span class="validation-error" *ngIf="signupForm.get('lname').hasError('maxlength')">Lastname exceeded max
+          characters</span>
+      </div>
+      <div class="form-group mt-3 col-6">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" formControlName="pswd" placeholder="Enter Password"
+          (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('pswd').hasError('required') && signupForm.get('pswd').touched) || (!signupForm.get('pswd').touched && signupForm.get('cpswd').touched)">Password
+          required</span>
+      </div>
+      <div class="form-group mt-3 col-6">
+        <label for="cpassword">Confirm Password</label>
+        <input type="password" class="form-control" id="cpassword" formControlName="cpswd"
+          (keydown.space)="$event.preventDefault();" placeholder="Confirm Password">
+        <span class="validation-error"
+          *ngIf="signupForm.get('cpswd').hasError('required') && signupForm.get('cpswd').touched && signupForm.get('pswd').touched">Confirm
+          Password
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('cpswd').hasError('nomatch')">Confirm Password
+          not matched with password</span>
+      </div>
+      <div class="form-group mt-3 col-6">
+        <label for="age">Age</label>
+        <input type="number" class="form-control" min="18" max="99"  id="age" formControlName="uage" placeholder="Enter Age">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('uage').hasError('required') && signupForm.get('uage').touched) || (!signupForm.get('uage').touched && signupForm.get('uage').touched)">Age
+          required</span>
+          <span class="validation-error" *ngIf="signupForm.get('uage').hasError('min')">User should me atleast 18 years old</span>
+      </div>
+      <div class="form group mt-3 col-6">
+        <label for="ugender">Gender</label>
+        <select class="form-control" formControlName="ugender">
+          <option id="Male" value="Male">Male</option>
+          <option id="Female" value="Female">Female</option>
+        </select>
+      </div>
+      <div class="form-group mt-3 col-6">
+        <label for="contactnumber">Contact Number</label>
+        <input type="text" class="form-control" id="contactnumber" formControlName="ucontactnumber"
+          placeholder="Enter Contact Number" (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('ucontactnumber').hasError('required') && signupForm.get('ucontactnumber').touched) || (!signupForm.get('ucontactnumber').touched && signupForm.get('ucontactnumber').touched)">Contact
+          Number
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('ucontactnumber').hasError('pattern')">Enter Numeric
+          Values only</span>
+        <span class="validation-error" *ngIf="signupForm.get('ucontactnumber').hasError('maxlength')">Contact
+          Number
+          exceeded max characters</span>
+      </div>
+      <div class="form-group mt-3 col-6">
+        <label for="aadharnumber">Aadhar Number</label>
+        <input type="text" class="form-control" id="aadharnumber" formControlName="uaadharnumber"
+          (keydown.space)="$event.preventDefault();" placeholder="Enter Aadhar Number">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('uaadharnumber').hasError('required') && signupForm.get('uaadharnumber').touched) || (!signupForm.get('uaadharnumber').touched && signupForm.get('uaadharnumber').touched)">Aadhar
+          Number
+          required</span>
+        <span class="validation-error" *ngIf="signupForm.get('uaadharnumber').hasError('pattern')">Enter Correct Values only</span>
+        <span class="validation-error" *ngIf="signupForm.get('uaadharnumber').hasError('maxlength')">Number of characters exceeded</span>
+      </div>
+      <div class="form-group mt-3 col-6">
+        <label for="pan">PAN</label>
+        <input type="text" class="form-control" id="pan" formControlName="upan" placeholder="Enter PAN"
+          (keydown.space)="$event.preventDefault();">
+        <span class="validation-error"
+          *ngIf="(signupForm.get('upan').hasError('required') && signupForm.get('upan').touched) || (!signupForm.get('upan').touched && signupForm.get('upan').touched)">PAN
+          required</span>
+          <span class="validation-error" *ngIf="signupForm.get('upan').hasError('pattern')">Enter Correct Details</span>
+        <span class="validation-error" *ngIf="signupForm.get('upan').hasError('maxlength')">Number of characters exceeded</span>
+      </div>
+      <!-- <div class="form-group mt-5 col-6">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" value="true" id="isAdmin" formControlName="isAdminChecked"
+            (change)="getIsAdminUser($event)">
+          <label class="custom-control-label" for="isAdmin">Is Admin</label>
+        </div>
+      </div> -->
+
+      <div class="form-group col-12 text-center">
+        <input type="submit" class="btn text-white form-control" [disabled]="signupForm.invalid" name="signup"
+          value="Sign Up">
+      </div>
+    </div>
+  </form>
+</div>

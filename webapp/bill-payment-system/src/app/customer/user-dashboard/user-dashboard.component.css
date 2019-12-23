@@ -1,0 +1,18 @@
+.nav-pills{
+    background-color:white;
+}
+.nav-pills .nav-link:not(.active) {
+    background-color: rgb(233, 233, 233);
+}
+
+  .wrapper {
+    width: 1170px;
+    margin: 0 auto;
+    }
+
+
+    .card-block {
+        min-height: 300px;
+    }
+
+  

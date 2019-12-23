@@ -1,0 +1,108 @@
+<div class="container mt-3">
+    <div class="row justify-content-center mt-4 opacity">
+
+        <div class="col-12 ">
+            <div class="card ">
+                
+                    <div class="alert alert-success" *ngIf="pendingBillsEmpty">
+                        No pending payments
+                    </div>
+              
+                <div class="card-body col-lg-12" *ngIf="!pendingBillsEmpty">
+                    <!-- <div class="card-header font-size-20"></div> -->
+                    <div class="page-title">Bill Details</div>
+                    <div class="row width-100 ">
+
+                    </div>
+                    <ul class="list-group list-group-flush mt-3">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col d-flex justify-content-center">
+                                    <b>User</b>
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    <B>Vendor</B>
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    <b>Amount</b>
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    <b>Pay</b>
+                                </div>
+        
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <ul class="list-group list-group-flush" *ngFor="let bill of pendingBills">
+                        <li class="list-group-item">
+                            <div class="row ">
+                                <div class="col d-flex justify-content-center">
+                                    {{username}}
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    {{vendorname}}
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    {{bill.billAmount}}
+                                </div>
+                                <div class="col d-flex justify-content-center">
+
+                                    <div class="btn btn-primary" data-toggle="collapse"
+                                        [attr.data-target]="'#id'+bill.billId">
+                                        Pay
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div [id]="'id'+bill.billId" class="fade collapse mt-3 bg-grey">
+                                <div class="row">
+                                    <div class=" d-flex justify-content-center col  mr-2"
+                                    *ngFor="let paymentGateway of vendorSelected.paymentGateway">
+                                    <div class="btn bg-blue" data-toggle="modal" data-target="#exampleModalCenter"
+                                        (click)="onPaymentTypeSelected(bill.billId,bill.billAmount,paymentGateway)">
+                                        {{paymentGateway}}</div>
+
+
+                                </div>
+                                </div>  
+                                
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Pay Invoice   </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onRefreshComponent()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div *ngIf="paymentTypeSelected=='Amazon Pay'">
+
+                    <app-payment-gateway [formSubmitted]="formSubmitted" ></app-payment-gateway>
+                </div>
+                <app-payment-gateway-paytm *ngIf="paymentTypeSelected==='PayTm'" [formSubmitted]="formSubmitted"></app-payment-gateway-paytm>
+                <app-payment-gateway-gpay *ngIf="paymentTypeSelected==='GooglePay'" [formSubmitted]="formSubmitted"></app-payment-gateway-gpay>
+                <app-payment-gateway-debit *ngIf="paymentTypeSelected==='Debit Card'"></app-payment-gateway-debit>
+                <app-payment-gateway-phonepe *ngIf="paymentTypeSelected==='PhonePe'" [formSubmitted]="formSubmitted"></app-payment-gateway-phonepe>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
